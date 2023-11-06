@@ -1,0 +1,14 @@
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\PE.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\PE.AssemblyInfoInputs.cache
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\PE.AssemblyInfo.cs
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\PE.csproj.CoreCompileInputs.cache
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\bin\Debug\net7.0\PE.exe
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\bin\Debug\net7.0\PE.deps.json
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\bin\Debug\net7.0\PE.runtimeconfig.json
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\bin\Debug\net7.0\PE.dll
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\bin\Debug\net7.0\PE.pdb
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\PE.dll
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\refint\PE.dll
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\PE.pdb
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\PE.genruntimeconfig.cache
+C:\Users\MKY\Desktop\CSharp Projects\PE\PE\obj\Debug\net7.0\ref\PE.dll
