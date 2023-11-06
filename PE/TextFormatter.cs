@@ -41,13 +41,6 @@ public class TextFormatter
 	}
 	public static string Truncate(string text, int width)
 	{
-		if (text.Length <= width)
-		{
-			return text;
-		}
-		else
-		{
-			return text.Substring(0, width - 3) + "...";
-		}
+		return text.Length <= width ? text : text.Substring(0, width - 3) + "...";
 	}
 }
