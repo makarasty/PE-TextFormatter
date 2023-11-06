@@ -10,11 +10,13 @@ public class TextFormatter
 {
 	public static void Test()
 	{
-		System.Console.WriteLine("|" + Align("Net", 20, AlignmentType.AlignLeft) + "|");
+		System.Console.WriteLine("|" + Align("Nerf This", 30, AlignmentType.AlignLeft) + "|");
 
-		System.Console.WriteLine("|" + Align("Net", 20, AlignmentType.AlignCenter) + "|");
+		System.Console.WriteLine("|" + Align("Nerf This", 30, AlignmentType.AlignCenter) + "|");
 
-		System.Console.WriteLine("|" + Align("Net", 20, AlignmentType.AlignRight) + "|");
+		System.Console.WriteLine("|" + Align("Nerf This", 30, AlignmentType.AlignRight) + "|");
+
+		System.Console.WriteLine("|" + Truncate("Nerf This", 4 + 3) + "|");
 	}
 
 	public static string Align(string text, int width, AlignmentType alignment)
@@ -37,10 +39,15 @@ public class TextFormatter
 				throw new ArgumentException("Invalid alignment");
 		}
 	}
-	public static string Truncate(string text, int width){
-		string newText = text;
-		if (text.Length > width)
-		text.Substring(7, 5);
-		return text;
+	public static string Truncate(string text, int width)
+	{
+		if (text.Length <= width)
+		{
+			return text;
+		}
+		else
+		{
+			return text.Substring(0, width - 3) + "...";
+		}
 	}
 }
