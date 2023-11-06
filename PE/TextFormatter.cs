@@ -41,6 +41,7 @@ public class TextFormatter
 	}
 	public static string Truncate(string text, int width)
 	{
-		return text.Length <= width ? text : text.Substring(0, width - 3) + "...";
+		//? Чомусь vscode запропонувала поміняти Substring на AsSpan
+		return text.Length <= width ? text : string.Concat(text.AsSpan(0, width - 3), "...");
 	}
 }
