@@ -1,11 +1,18 @@
-﻿namespace PE;
+﻿using System.Text;
+
+namespace PE;
+
 class Program
 {
 	static void Main()
 	{
-		var textFormatter =  new TextFormatter();
+		Console.OutputEncoding = Encoding.Unicode;
 
-		TextFormatter.Test();
+		var textFormatter = new TextFormatter();
+
+		//TextFormatter.Test();
+
+		ConsoleHelper.PrintAllCharacters(20);
 
 		Console.ReadKey();
 	}
