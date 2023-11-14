@@ -10,15 +10,11 @@ class ConsoleHelper
 		{
 			char character = (char)i;
 			string charString = character.ToString();
+			string charCodeString = i.ToString("0000");
 	
-			Console.Write(charString);
-	
-			if (i < char.MaxValue)
-			{
-				Console.Write(' ');
-			}
-	
-			if (i > 0 && i % charsPerLine == 0)
+			Console.Write($"{charString} ({charCodeString})");
+
+			if (i % charsPerLine == 0)
 			{
 				Console.WriteLine();
 			}

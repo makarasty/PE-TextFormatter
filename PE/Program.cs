@@ -8,11 +8,19 @@ class Program
 	{
 		Console.OutputEncoding = Encoding.Unicode;
 
-		var textFormatter = new TextFormatter();
+		GridColumn column = new("My litle table", 20)
+		{
+			AlignHeader = AlignmentType.Center,
+			AlignData = AlignmentType.Left
+		};
 
-		//TextFormatter.Test();
+		OneColumnGrid table = new(column);
 
-		ConsoleHelper.PrintAllCharacters(20);
+		table.AddRow("Nerf this");
+		table.AddRow("Warframe");
+		table.AddRow(123);
+
+		table.Render();
 
 		Console.ReadKey();
 	}
