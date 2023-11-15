@@ -66,19 +66,33 @@ public class Table
 		}
 
 		var header = new StringBuilder();
-		header.Append('╔');
+		var separator = new StringBuilder();
+		var rows = new StringBuilder();
+		var footer = new StringBuilder();
 
-		for (int column = 0; column < _columns.Count; column++)
+		header.Append('╔');
+		separator.Append('╠');
+		footer.Append('╚');
+
+		for (int column = 0; column < columnCount; column++)
 		{
 			header.Append(new string('═', colWidths[column] + 2));
-			if (column != _columns.Count - 1)
+			separator.Append(new string('═', colWidths[column] + 2));
+			footer.Append(new string('═', colWidths[column] + 2));
+
+			if (column != columnCount - 1)
 			{
 				header.Append('╦');
+				separator.Append('╬');
+				footer.Append('╩');
 			}
 		}
-		header.Append("╗\n");
 
-		for (int thatColumn = 0; thatColumn < _columns.Count; thatColumn++)
+		header.Append("╗\n");
+		separator.Append("╣\n");
+		footer.Append('╝');
+
+		for (int thatColumn = 0; thatColumn < columnCount; thatColumn++)
 		{
 			GridColumn myPickedColumn = _columns[thatColumn];
 			var formattedName = TextFormatter.Format(myPickedColumn.Name, colWidths[thatColumn], (opt) =>
@@ -90,27 +104,13 @@ public class Table
 		}
 		header.Append("║\n");
 
-		var separator = new StringBuilder();
-		separator.Append('╠');
-
-		for (int column = 0; column < _columns.Count; column++)
-		{
-			separator.Append(new string('═', colWidths[column] + 2));
-			if (column != _columns.Count - 1)
-			{
-				separator.Append('╬');
-			}
-		}
-		separator.Append("╣\n");
-
-		var rows = new StringBuilder();
-
 		int rowsCount = _rows.Count;
 
 		for (int row = 0; row < rowsCount; row++)
 		{
 			var rowString = new StringBuilder();
-			for (int column = 0; column < _columns.Count; column++)
+
+			for (int column = 0; column < columnCount; column++)
 			{
 				GridColumn myPickedCell = _columns[column];
 				object thatRowCol = _rows[row][column];
@@ -132,7 +132,6 @@ public class Table
 				{
 					rowString.Append(new string('-', width + 2)).Append('╬');
 				}
-				// ^ починає індекс з кінця як .at(-1) в NodeJS 16+
 				rowString[^1] = '╣';
 
 				rowString.Append('\n');
@@ -140,19 +139,6 @@ public class Table
 
 			rows.Append(rowString);
 		}
-
-		var footer = new StringBuilder();
-		footer.Append('╚');
-
-		for (int column = 0; column < _columns.Count; column++)
-		{
-			footer.Append(new string('═', colWidths[column] + 2));
-			if (column != _columns.Count - 1)
-			{
-				footer.Append('╩');
-			}
-		}
-		footer.Append('╝');
 
 		// Хехе а ось і сам рендер :D
 		Console.Write(header);
