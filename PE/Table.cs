@@ -27,8 +27,6 @@ public class Table
 
 	public void AddRow(params object[] values)
 	{
-		if (values.Length != _columns.Count) throw new ArgumentException("Неправильна кількість стовпців >w<");
-
 		_rows.Add(values.ToList());
 	}
 
@@ -90,7 +88,7 @@ public class Table
 
 		header.Append("╗\n");
 		separator.Append("╣\n");
-		footer.Append('╝');
+		footer.Append("╝\n");
 
 		for (int thatColumn = 0; thatColumn < columnCount; thatColumn++)
 		{
