@@ -1,7 +1,5 @@
 ﻿using System.Text;
-
 namespace PE;
-
 public enum AlignmentType
 {
 	Left,
@@ -29,48 +27,6 @@ public enum OverflowType
 }
 public class TextFormatter
 {
-	public static void Test()
-	{
-		var aText = Align("Nerf This", 30, AlignmentType.Left);
-		System.Console.WriteLine("|" + aText + "|" + aText.Length);
-
-		aText = Align("Nerf This", 30, AlignmentType.Center);
-		System.Console.WriteLine("|" + aText + "|" + aText.Length);
-
-		aText = Align("Nerf This", 30, AlignmentType.Right);
-		System.Console.WriteLine("|" + aText + "|" + aText.Length);
-
-		System.Console.WriteLine("|" + Truncate("Nerf This", 4 + 3) + "|");
-
-		System.Console.WriteLine(new string('-', 20));
-
-		var bText = WrapWord("Nerf This, I just pressing qui", 8);
-		System.Console.WriteLine(string.Join('\n', bText));
-
-		System.Console.WriteLine(new string('-', 20));
-
-		bText = Format("Nerf This, I just pressing qui", new FormatOptions(15));
-		System.Console.WriteLine(string.Join('\n', bText));
-
-		System.Console.WriteLine(new string('-', 20));
-
-		bText = Format("Nerf This, I just pressing qui", 8, (opt) =>
-		{
-			opt.Alignment = AlignmentType.Center;
-			opt.Overflow = OverflowType.WrapWord;
-		});
-		System.Console.WriteLine(string.Join('\n', bText));
-
-		System.Console.WriteLine(new string('-', 20));
-
-		bText = Format("Nerf This, I just pressing qui", 8, (opt) =>
-		{
-			opt.Alignment = AlignmentType.Right;
-			opt.Overflow = OverflowType.WrapWord;
-		});
-		System.Console.WriteLine(string.Join('\n', bText));
-	}
-
 	public static IEnumerable<string> Format(string text, int width)
 	{
 		return Format(text, new FormatOptions(width));
@@ -131,7 +87,7 @@ public class TextFormatter
 				throw new FormatException("Text is too long");
 			}
 
-			if (currentLine.Length + word.Length + 1 > width)
+			if (currentLine.Length + word.Length > width)
 			{
 				result.Add(currentLine.ToString().TrimStart());
 				currentLine.Clear();
