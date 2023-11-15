@@ -11,7 +11,6 @@ public class FormatOptions
 	public int Width { get; set; }
 	public OverflowType Overflow { get; set; }
 	public AlignmentType Alignment { get; set; }
-
 	public FormatOptions(int width, AlignmentType alignment = AlignmentType.Left, OverflowType overflow = OverflowType.Hide)
 	{
 		if (width <= 0) throw new ArgumentException("Invalid width");
@@ -43,12 +42,10 @@ public class TextFormatter
 		{
 			throw new ArgumentException("Invalid text");
 		}
-
 		if (options.Overflow == OverflowType.Hide)
 		{
 			return new[] { Truncate(text, options.Width) };
 		}
-
 		return WrapWord(text, options.Width)
 			.Select(line => Align(line, options.Width, options.Alignment))
 			.ToArray();
@@ -86,21 +83,17 @@ public class TextFormatter
 			{
 				throw new FormatException("Text is too long");
 			}
-
 			if (currentLine.Length + word.Length > width)
 			{
 				result.Add(currentLine.ToString().TrimStart());
 				currentLine.Clear();
 			}
-
 			currentLine.Append(' ').Append(word);
 		}
-
 		if (currentLine.Length > 0)
 		{
 			result.Add(currentLine.ToString().TrimStart());
 		}
-
 		return result;
 	}
 }

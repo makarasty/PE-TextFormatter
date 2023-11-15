@@ -2,44 +2,36 @@ using System.Text;
 namespace PE;
 public class GridColumn
 {
-
 	public string Name { get; set; }
 	public int? Width { get; set; }
 	public AlignmentType AlignHeader { get; set; }
 	public AlignmentType AlignData { get; set; }
-
 	public GridColumn(string name, int? width = null)
 	{
 		Name = name;
 		Width = width;
 	}
 }
-
 public class Table
 {
 	private readonly List<GridColumn> _columns = new();
 	private readonly List<List<object>> _rows = new();
-
 	public void AddColumn(GridColumn gridColumn)
 	{
 		_columns.Add(gridColumn);
 	}
-
 	public void AddRow(params object[] values)
 	{
 		_rows.Add(values.ToList());
 	}
-
 	public void SetCell(int col, int row, object value)
 	{
 		_rows[row][col] = value;
 	}
-
 	public object GetCell(int col, int row)
 	{
 		return _rows[row][col];
 	}
-
 	public void Render()
 	{
 		// Та сама крута логіка яка рахує довжину стовпця відповідно до самого довгого рядка в стовпці 
@@ -47,22 +39,19 @@ public class Table
 		var columnCount = _columns.Count;
 		var colWidths = new int[columnCount];
 
-		for (int col = 0; col < columnCount; col++)
+		for (int column = 0; column < columnCount; column++)
 		{
-			colWidths[col] = _columns[col].Name.Length;
-
+			colWidths[column] = _columns[column].Name.Length;
 			for (int row = 0; row < rowCount; row++)
 			{
-				var cell = _rows[row][col].ToString();
-				colWidths[col] = Math.Max(colWidths[col], cell!.Length);
+				var cell = _rows[row][column].ToString();
+				colWidths[column] = Math.Max(colWidths[column], cell!.Length);
 			}
-
-			if (_columns[col].Width.HasValue)
+			if (_columns[column].Width.HasValue)
 			{
-				colWidths[col] = _columns[col].Width!.Value;
+				colWidths[column] = _columns[column].Width!.Value;
 			}
 		}
-
 		var header = new StringBuilder();
 		var separator = new StringBuilder();
 		var rows = new StringBuilder();
@@ -85,15 +74,14 @@ public class Table
 				footer.Append('╩');
 			}
 		}
-
 		header.Append("╗\n");
 		separator.Append("╣\n");
 		footer.Append("╝\n");
 
-		for (int thatColumn = 0; thatColumn < columnCount; thatColumn++)
+		for (int column = 0; column < columnCount; column++)
 		{
-			GridColumn myPickedColumn = _columns[thatColumn];
-			var formattedName = TextFormatter.Format(myPickedColumn.Name, colWidths[thatColumn], (opt) =>
+			GridColumn myPickedColumn = _columns[column];
+			var formattedName = TextFormatter.Format(myPickedColumn.Name, colWidths[column], (opt) =>
 			{
 				opt.Alignment = myPickedColumn.AlignHeader;
 				opt.Overflow = OverflowType.WrapWord;
@@ -103,16 +91,13 @@ public class Table
 		header.Append("║\n");
 
 		int rowsCount = _rows.Count;
-
 		for (int row = 0; row < rowsCount; row++)
 		{
 			var rowString = new StringBuilder();
-
 			for (int column = 0; column < columnCount; column++)
 			{
 				GridColumn myPickedCell = _columns[column];
 				object thatRowCol = _rows[row][column];
-
 				var formattedCell = TextFormatter.Format(thatRowCol?.ToString() ?? "", colWidths[column], (opt) =>
 				{
 					opt.Alignment = myPickedCell.AlignData;
@@ -120,24 +105,20 @@ public class Table
 				});
 				rowString.Append("║ ").Append(formattedCell.First()).Append(' ');
 			}
-			rowString.Append("║\n");
 
+			rowString.Append("║\n");
 			if (row != rowsCount - 1)
 			{
 				rowString.Append('╠');
-
 				foreach (int width in colWidths)
 				{
 					rowString.Append(new string('-', width + 2)).Append('╬');
 				}
 				rowString[^1] = '╣';
-
 				rowString.Append('\n');
 			}
-
 			rows.Append(rowString);
 		}
-
 		// Хехе а ось і сам рендер :D
 		Console.Write(header);
 		Console.Write(separator);
