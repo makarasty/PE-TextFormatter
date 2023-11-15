@@ -7,7 +7,7 @@ class Program
 		Console.OutputEncoding = Encoding.Unicode;
 		var table = new Table();
 
-		table.AddColumn(new GridColumn("Type", 10)
+		table.AddColumn(new GridColumn("Type lol kek sheburek lmaokekas", 10)
 		{
 			AlignHeader = AlignmentType.Right,
 			AlignData = AlignmentType.Center
@@ -19,7 +19,7 @@ class Program
 			AlignData = AlignmentType.Right
 		});
 
-		table.AddColumn(new GridColumn("Imbalance?")
+		table.AddColumn(new GridColumn("Imbalance?", 10)
 		{
 			AlignHeader = AlignmentType.Left,
 			AlignData = AlignmentType.Center

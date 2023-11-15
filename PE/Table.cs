@@ -78,6 +78,8 @@ public class Table
 		separator.Append("╣\n");
 		footer.Append("╝\n");
 
+		List<List<string>> columnHeaders = new();
+
 		for (int column = 0; column < columnCount; column++)
 		{
 			GridColumn myPickedColumn = _columns[column];
@@ -86,14 +88,36 @@ public class Table
 				opt.Alignment = myPickedColumn.AlignHeader;
 				opt.Overflow = OverflowType.WrapWord;
 			});
-			header.Append("║ ").Append(formattedName.First()).Append(' ');
+			columnHeaders.Add(formattedName.ToList());
 		}
-		header.Append("║\n");
+
+		int maxColumnLength = columnHeaders.Max(subList => subList.Count);
+		header.EnsureCapacity(columnCount * maxColumnLength * 10);
+
+		for (int t = 0; t < maxColumnLength; t++)
+		{
+			header.Append("║ ");
+			for (int column = 0; column < columnCount; column++)
+			{
+				List<string> tColumn = columnHeaders[column];
+				if (t < tColumn.Count)
+				{
+					header.Append(tColumn[t]).Append(" ║ ");
+				}
+				else
+				{
+					header.Append(' ').Append(new string(' ', colWidths[column])).Append("║ ");
+				}
+			}
+			header.Append('\n');
+		}
 
 		int rowsCount = _rows.Count;
 		for (int row = 0; row < rowsCount; row++)
 		{
+			List<List<string>> rowHeaders = new();
 			var rowString = new StringBuilder();
+
 			for (int column = 0; column < columnCount; column++)
 			{
 				GridColumn myPickedCell = _columns[column];
@@ -103,10 +127,29 @@ public class Table
 					opt.Alignment = myPickedCell.AlignData;
 					opt.Overflow = OverflowType.WrapWord;
 				});
-				rowString.Append("║ ").Append(formattedCell.First()).Append(' ');
+				rowHeaders.Add(formattedCell.ToList());
 			}
 
-			rowString.Append("║\n");
+			int maxRowLength = rowHeaders.Max(subList => subList.Count);
+			rowString.EnsureCapacity(columnCount * maxRowLength * 10);
+
+			for (int t = 0; t < maxRowLength; t++)
+			{
+				rowString.Append("║ ");
+				for (int column = 0; column < columnCount; column++)
+				{
+					List<string> tColumn = rowHeaders[column];
+					if (t < tColumn.Count)
+					{
+						rowString.Append(tColumn[t]).Append(" ║ ");
+					}
+					else
+					{
+						rowString.Append(' ').Append(new string(' ', colWidths[column])).Append("║ ");
+					}
+				}
+				rowString.Append('\n');
+			}
 			if (row != rowsCount - 1)
 			{
 				rowString.Append('╠');
@@ -119,6 +162,7 @@ public class Table
 			}
 			rows.Append(rowString);
 		}
+
 		// Хехе а ось і сам рендер :D
 		Console.Write(header);
 		Console.Write(separator);
