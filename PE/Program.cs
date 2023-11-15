@@ -8,16 +8,16 @@ class Program
 	{
 		Console.OutputEncoding = Encoding.Unicode;
 
-		GridColumn column = new("My litle table", 20)
+		GridColumn column = new("My litle table")
 		{
 			AlignHeader = AlignmentType.Center,
-			AlignData = AlignmentType.Left
+			AlignData = AlignmentType.Center
 		};
 
 		OneColumnGrid table = new(column);
 
 		table.AddRow("Nerf this");
-		table.AddRow("Warframe");
+		table.AddRow("vghfg,f dfdfdfhhfgd fghfghfgh dfdg df dfgdfg dfddgdf dfdgd dfg");
 		table.AddRow(123);
 
 		table.Render();

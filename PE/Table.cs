@@ -8,11 +8,10 @@ public class GridCell
 public class GridColumn
 {
 	public string Name { get; set; }
-	public int Width { get; private set; }
+	public int? Width { get; private set; }
 	public AlignmentType AlignHeader { get; set; }
 	public AlignmentType AlignData { get; set; }
-
-	public GridColumn(string name, int width)
+	public GridColumn(string name, int? width = null)
 	{
 		Name = name;
 		Width = width;
@@ -37,22 +36,24 @@ public class OneColumnGrid
 
 	public void Render()
 	{
-		IEnumerable<string> header = TextFormatter.Format(_column.Name, _column.Width, options =>
+		int colWidth = _column.Width ?? _column.Name.Length + 2;
+		IEnumerable<string> header = TextFormatter.Format(_column.Name, colWidth, options =>
 		{
 			options.Alignment = _column.AlignHeader;
 			options.Overflow = OverflowType.WrapWord;
 		});
 
-		string horizontalLine = new('═', _column.Width);
+		string horizontalLine = new('═', colWidth);
+		string rowLine = new('-', colWidth);
 		char verticalLine = '║';
 
 		Console.WriteLine($"╔{horizontalLine}╗");
 		Console.WriteLine($"{verticalLine}{header.First()}{verticalLine}");
 		Console.WriteLine($"╠{horizontalLine}╣");
 
-		foreach (var row in _rows)
+		for (int i = 0; i < _rows.Count; i++)
 		{
-			var formattedRow = TextFormatter.Format(row.Value.ToString() ?? "", _column.Width, options =>
+			var formattedRow = TextFormatter.Format(_rows[i].Value.ToString() ?? "", colWidth, options =>
 			{
 				options.Alignment = _column.AlignData;
 				options.Overflow = OverflowType.WrapWord;
@@ -61,6 +62,10 @@ public class OneColumnGrid
 			foreach (var line in formattedRow)
 			{
 				Console.WriteLine($"{verticalLine}{line}{verticalLine}");
+			}
+			if (_rows.Count - 1 != i)
+			{
+				Console.WriteLine($"╠{rowLine}╣");
 			}
 		}
 

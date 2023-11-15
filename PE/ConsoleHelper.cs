@@ -6,7 +6,7 @@ class ConsoleHelper
 {
 	public static void PrintAllCharacters(int charsPerLine)
 	{
-		for (int i = 0; i <= char.MaxValue; i++)
+		for (int i = char.MinValue; i <= char.MaxValue; i++)
 		{
 			char character = (char)i;
 			string charString = character.ToString();
