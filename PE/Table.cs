@@ -45,15 +45,18 @@ public class Table
 	public void Render()
 	{
 		// Та сама крута логіка яка рахує довжину стовпця відповідно до самого довгого рядка в стовпці 
-		var colWidths = new int[_columns.Count];
-		for (int col = 0; col < _columns.Count; col++)
+		var rowCount = _rows.Count;
+		var columnCount = _columns.Count;
+		var colWidths = new int[columnCount];
+
+		for (int col = 0; col < columnCount; col++)
 		{
 			colWidths[col] = _columns[col].Name.Length;
-			foreach (var row in _rows)
+
+			for (int row = 0; row < rowCount; row++)
 			{
-				var cell = row[col]!.ToString();
-				if (cell!.Length > colWidths[col])
-					colWidths[col] = cell.Length;
+				var cell = _rows[row][col].ToString();
+				colWidths[col] = Math.Max(colWidths[col], cell!.Length);
 			}
 
 			if (_columns[col].Width.HasValue)
@@ -64,6 +67,7 @@ public class Table
 
 		var header = new StringBuilder();
 		header.Append('╔');
+
 		for (int column = 0; column < _columns.Count; column++)
 		{
 			header.Append(new string('═', colWidths[column] + 2));
@@ -88,6 +92,7 @@ public class Table
 
 		var separator = new StringBuilder();
 		separator.Append('╠');
+
 		for (int column = 0; column < _columns.Count; column++)
 		{
 			separator.Append(new string('═', colWidths[column] + 2));
@@ -138,6 +143,7 @@ public class Table
 
 		var footer = new StringBuilder();
 		footer.Append('╚');
+
 		for (int column = 0; column < _columns.Count; column++)
 		{
 			footer.Append(new string('═', colWidths[column] + 2));
